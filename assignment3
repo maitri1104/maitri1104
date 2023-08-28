@@ -1,0 +1,87 @@
+def is_valid_word(wordlist, word):
+    found= False
+    for item in wordlist:
+        if word==item:
+            found= True
+    return found 
+
+def make_str_from_row(board, row_index):
+    row= board[row_index]
+    row_str=''.join(row)
+    return row_str
+
+def make_str_from_column(board, column_index):
+    row1= board[0][column_index]
+    row2= board[1][column_index]
+    row= row1 + row2
+    row_str=''.join(row)
+    return row_str
+
+def board_contains_words_in_row(board, word):
+    for row_index in range(len(board)):
+        if word in make_str_from_row(board, row_index):
+            return True
+    return False
+
+def board_contains_word_in_column(board, word):
+    num_rows=len(board)
+    num_columns=len(board[0])
+    for col_index in range (num_columns):
+        column=''.join(board[row_index][col_index] for row_index in range(num_rows))
+        if word in column:
+            return True
+        return False
+
+def board_contains_word(board, word):
+    num_rows= len(board)
+    num_columns= len(board[0])
+    for row_index in range(num_rows):
+        row_str=''.join(board[row_index])
+        if word in row_str:
+            return True
+    for col_index in range(num-columns):
+        column=''.join(board[row_index][col_index] for row_index in range(num_rows))
+        if word in column:
+            return True
+    return False
+
+def word_score(word):
+    word_length= len(word)
+    if word_length<3:
+        return 0
+    elif word_length<=6:
+        return word_length
+    elif word_length<=9:
+        return 2 * word_length
+    else:
+        return 3 * word_length
+
+def update_score(player_info, word):
+    word_length= len(word)
+    word_points= word_score(word)
+    player_info[1]+= word_points
+    return player_info
+
+
+def num_words_on_board(board, words):
+    count = 0
+    for word in words:
+        if board_contains_word(board, word):
+            count += 1
+        return count 
+
+def read_words(words_file):
+    words_list=[]
+    for line in words_file:
+        word= line.strip()
+        words_list.append(word)
+    return words_list
+
+def read_board(boards_file):
+    board=[]
+    for line in board_file:
+        row= list(line.strip())
+        board.append(row)
+    return board
+
+
